@@ -1,0 +1,58 @@
+{
+  "name": "first-page",
+  "version": "1.0.0",
+  "description": "first page learning nodejs with ejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG=app nodemon app.js",
+    "lint": "eslint app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rntvicente/first-page.git"
+  },
+  "keywords": [
+    "nodejs",
+    "ejs",
+    "jquery",
+    "bootstrap",
+    "learning",
+    "javascript",
+    "express"
+  ],
+  "author": "Renato Vicente",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rntvicente/first-page/issues"
+  },
+  "homepage": "https://github.com/rntvicente/first-page#readme",
+  "engines": {
+    "node": "8.11.3"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "chalk": "^2.4.1",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "jquery": "^3.2.1",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.13.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "PORT": 4000,
+      "NODE_ENV": "development"
+    }
+  }
+}
