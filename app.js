@@ -13,7 +13,14 @@ app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dis
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, '/src/views'));
+
 app.get('/', (req, res) => {
+  res.render('index', {
+    title: 'Título',
+    list: ['a', 'b', 'c']
+  });
   res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
