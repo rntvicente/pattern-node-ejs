@@ -4,19 +4,14 @@ const debug = require('debug')('app');
 const morgan = require('morgan');
 const path = require('path');
 
+const nav = [
+  { link: '/books', title: 'Books' },
+  { link: '/authors', title: 'Authors' }
+];
+
 const app = express();
 const port = process.env.PORT || 3000;
-const bookRouter = express.Router();
-
-bookRouter.route('/')
-  .get((req, res) => {
-    res.status('200').send('Hello Books');
-  });
-
-bookRouter.route('/single')
-  .get((req, res) => {
-    res.status('200').send('Hello Single Book');
-  });
+const bookRouter = require('./src/routes/bookRoutes')(nav);
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public')));
@@ -31,11 +26,9 @@ app.set('views', path.join(__dirname, '/src/views'));
 app.get('/', (req, res) => {
   res.render('index', {
     title: 'Library',
-    nav: [
-      { link: '/books', title: 'Books' },
-      { link: '/authors', title: 'Authors' }
-    ]
+    nav
   });
+
   res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
