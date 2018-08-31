@@ -1,80 +1,52 @@
 const express = require('express');
+const { MongoClient, ObjectID } = require('mongodb');
+const debug = require('debug')('app:bookRoutes');
+const chalk = require('chalk');
+
 
 const bookRouter = express.Router();
 
 const router = (nav) => {
-  const books = [
-    {
-      title: 'War and Peace',
-      genre: 'Historical Fiction',
-      author: 'Lev Nikolayevich Tolstoy',
-      read: false
-    },
-    {
-      title: 'Les Misérables',
-      genre: 'Historical Fiction',
-      author: 'Victor Hugo',
-      read: false
-    },
-    {
-      title: 'The Time Machine',
-      genre: 'Science Fiction',
-      author: 'H. G. Wells',
-      read: false
-    },
-    {
-      title: 'A Journey into the Center of the Earth',
-      genre: 'Science Fiction',
-      author: 'Jules Verne',
-      read: false
-    },
-    {
-      title: 'The Dark World',
-      genre: 'Fantasy',
-      author: 'Henry Kuttner',
-      read: false
-    },
-    {
-      title: 'The Wind in the Willows',
-      genre: 'Fantasy',
-      author: 'Kenneth Grahame',
-      read: false
-    },
-    {
-      title: 'Life On The Mississippi',
-      genre: 'History',
-      author: 'Mark Twain',
-      read: false
-    },
-    {
-      title: 'Childhood',
-      genre: 'Biography',
-      author: 'Lev Nikolayevich Tolstoy',
-      read: false
+  const urlDB = 'mongodb://library:librar1@ds018258.mlab.com:18258/library';
+  let database;
+  let db;
+
+  (async function mongo() {
+    try {
+      database = await MongoClient.connect(urlDB, { useNewUrlParser: true });
+      db = await database.db('library');
+      debug(chalk.green('Connected corretly to server.'));
+    } catch (error) {
+      debug(chalk.red(error.stack));
     }
-  ];
+  }());
 
   bookRouter.route('/')
     .get((req, res) => {
-      res.render('bookListView', {
-        books,
-        title: 'Library',
-        nav
-      });
+      (async function find() {
+        const books = await db.collection('books').find().toArray();
+
+        res.render('bookListView', {
+          books,
+          title: 'Library',
+          nav
+        });
+      }());
     });
 
   bookRouter.route('/:id')
     .get((req, res) => {
-      const { id } = req.params;
+      (async function findOne() {
+        const { id } = req.params;
+        const book = await db.collection('books').findOne({ _id: new ObjectID(id) });
+        debug(book);
 
-      res.render('bookView', {
-        book: books[id],
-        title: 'Library',
-        nav: [
-          { link: '/books', title: 'Books' },
-          { link: '/authors', title: 'Authors' }
-        ]
-      });
+        res.render('bookView', {
+          book,
+          title: 'Library',
+          nav
+        });
+      }());
     });
 
   return bookRouter;

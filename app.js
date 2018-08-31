@@ -12,6 +12,7 @@ const nav = [
 const app = express();
 const port = process.env.PORT || 3000;
 const bookRouter = require('./src/routes/bookRoutes')(nav);
+const adminRouter = require('./src/routes/adminRoutes')(nav);
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public')));
@@ -19,6 +20,7 @@ app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dis
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 app.use('/books', bookRouter);
+app.use('/admin', adminRouter);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));

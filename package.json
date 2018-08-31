@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=app nodemon app.js",
+    "start": "DEBUG=app,app:* nodemon app.js",
     "lint": "eslint app.js"
   },
   "repository": {
@@ -15,11 +15,15 @@
   "keywords": [
     "nodejs",
     "ejs",
+    "pug",
     "jquery",
     "bootstrap",
     "learning",
     "javascript",
-    "express"
+    "express",
+    "babel",
+    "passport",
+    "mongodb"
   ],
   "author": "Renato Vicente",
   "license": "ISC",
@@ -37,6 +41,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "jquery": "^3.2.1",
+    "mongodb": "^3.1.4",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.3",
     "pug": "^2.0.3"
